@@ -1,8 +1,17 @@
 // calculates remaining time and writes to DOM
-function setTime() {
-    var currentTime = Date.now();
+function setTime(editNode, countTo) {
+    var currentTime = Date.now(),
+        remainingTime,
+        remainingHours,
+        remainingMinutes,
+        remainingSeconds;
 
-    console.log(currentTime);
+    remainingTime = countTo - currentTime;
+    remainingHours = (remainingTime / 3600000).toFixed(0); // 60 * 60 * 1000
+    remainingMinutes = (remainingTime % 3600000 / 60000).toFixed(0);
+    remainingSeconds = (remainingTime % 60000 / 1000).toFixed(0);
+
+    editNode.innerHTML = remainingHours + ' hours ' + remainingMinutes + ' minutes ' + remainingSeconds + ' seconds ';
 }
 
 // takes string in UTC format and returns date object
@@ -35,12 +44,18 @@ function countdown() {
         countdownData = countdownNode.getAttribute("data-count-date"), // get the time and date as UTC formatted string
         countdownTime = setUTC(countdownData);
 
-    console.log(countdownTime);
+
 
     // check that element exists
     if (typeof countdownNode == "object") {
-        var refreshCountdown = window.setInterval(setTime, 1);
-        clearInterval(refreshCountdown);
+
+        // display time immediately
+        setTime(countdownTime);
+
+        // update time once per second
+        setInterval(function() {
+            setTime(countdownNode, countdownTime);
+        }, 1000);
     }
 }
 
