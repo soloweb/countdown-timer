@@ -39,12 +39,15 @@ function setUTC(dateString) {
 
 // main function
 function countdown() {
-    var countdownId = "#countdown", // selector for element
-        countdownNode = document.querySelector(countdownId), // get element
-        countdownData = countdownNode.getAttribute("data-count-date"), // get the time and date as UTC formatted string
-        countdownTime = setUTC(countdownData);
+    var countdownId,
+        countdownNode,
+        countdownData,
+        countdownTime;
 
-
+    countdownId = "#countdown", // selector for element
+    countdownNode = document.querySelector(countdownId), // get element
+    countdownData = countdownNode.getAttribute("data-count-date"), // get the time and date as UTC formatted string
+    countdownTime = setUTC(countdownData); // use data to create Date object
 
     // check that element exists
     if (typeof countdownNode == "object") {
